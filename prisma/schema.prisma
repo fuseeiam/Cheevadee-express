@@ -52,9 +52,9 @@ enum PaymentStatus {
 }
 
 model Admin {
-  id        Int    @id @default(autoincrement())
-  userId    Int
+  id        Int     @id @default(autoincrement())
   firstName String
   lastName  String
+  email     String? @unique
   password  String
 }

@@ -28,6 +28,7 @@ const registerSchema = Joi.object({
         is: Joi.string().email(),
         then: Joi.string().default(Joi.ref('emailOrMobile'))
     })
+
 });
 
 exports.registerSchema = registerSchema;
@@ -37,4 +38,10 @@ const loginSchema = Joi.object({
     password: Joi.string().required()
 });
 
+const adminLoginSchema = Joi.object({
+    email: Joi.string().required(),
+    password: Joi.string().required()
+});
+
 exports.loginSchema = loginSchema;
+exports.adminLoginSchema = adminLoginSchema;

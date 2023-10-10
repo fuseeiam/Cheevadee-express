@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "nodemon src/app.js"
   },
+  "prisma": {
+    "seed": "node src/seeds/admin.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
