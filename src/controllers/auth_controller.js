@@ -29,10 +29,12 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     try {
+
         const { value, error } = loginSchema.validate(req.body);
         if (error) {
             return next(error)
         }
+        console.log(value);
         const user = await prisma.user.findFirst({
             where: {
                 OR: [
@@ -55,6 +57,7 @@ exports.login = async (req, res, next) => {
         res.status(200).json({ accessToken, user });
 
     } catch (err) {
+        console.log(err);
         next(err)
     }
 }
@@ -89,4 +92,8 @@ exports.adminLogin = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
+}
+
+exports.getMe = async (req, res, next) => {
+    res.status(200).json({ user: req.user });
 }
