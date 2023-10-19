@@ -7,6 +7,7 @@ const notFoundMiddleware = require('./middlewares/not_found');
 const errorMiddleware = require('./middlewares/error');
 const authRoute = require('./routes/auth-route');
 const userRoute = require('./routes/user-route');
+const roomRoute = require('./routes/room-route');
 
 const app = express();
 
@@ -18,8 +19,14 @@ app.use(express.json());
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
 
+app.use('/booking/reserve', roomRoute);
+
+
+
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
+
+
 
 const PORT = process.env.PORT || '5000';
 app.listen(PORT, () => console.log(`server running on port: ${PORT}`));

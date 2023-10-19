@@ -17,7 +17,13 @@ model User {
   email     String? @unique
   mobile    String? @unique
   password  String
+  // role      ROLE    @default(USER)
 }
+
+// enum ROLE {
+//   ADMIN
+//   USER
+// }
 
 model Booking {
   id             Int           @id @default(autoincrement())
@@ -30,13 +36,12 @@ model Booking {
 }
 
 model Room {
-  id          Int    @id @default(autoincrement())
-  rootype_id  Int
+  id          Int     @id @default(autoincrement())
+  roomtype_id Int
   bed         String
-  picture     String
+  picture     String?
   room_size   String
   veiw        String
-  amount_room Int
   price       Int
 }
 

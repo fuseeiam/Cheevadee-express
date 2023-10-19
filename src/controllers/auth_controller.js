@@ -50,7 +50,8 @@ exports.login = async (req, res, next) => {
             return next(createError('invalid credential', 400))
         }
         const payload = { userID: user.id };
-        const accessToken = jwt.sign(payload, process.env.JWT_SECRETE_KEY || 'gajgajvajhvyfud', {
+        console.log(process.env.JWT_SECRET_KEY);
+        const accessToken = jwt.sign(payload, process.env.JWT_SECRET_KEY || 'gajgajvajhvyfud', {
             expiresIn: process.env.JWT_EXPIRE
         });
         delete user.password;
