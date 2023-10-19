@@ -10,7 +10,7 @@ exports.register = async (req, res, next) => {
         const { value, error } = registerSchema.validate(req.body);
         console.log(value);
         if (error) {
-            console.log(error);
+            next(err)
         }
         value.password = await bcrypt.hash(value.password, 12);
         const user = await prisma.user.create({
@@ -29,12 +29,12 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     try {
-
+        console.log('req.body', req.body);
         const { value, error } = loginSchema.validate(req.body);
         if (error) {
             return next(error)
         }
-        console.log(value);
+
         const user = await prisma.user.findFirst({
             where: {
                 OR: [
@@ -95,5 +95,11 @@ exports.adminLogin = async (req, res, next) => {
 }
 
 exports.getMe = async (req, res, next) => {
+    // const userId = req.user.id
+    // const {} = req.body
+
+    // await prisma.create({
+    //     userId,
+    // })
     res.status(200).json({ user: req.user });
 }

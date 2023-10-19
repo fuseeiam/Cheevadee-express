@@ -14,4 +14,6 @@ router.patch('/', authenticatedMiddleware,
     userController.updateProfile
 );
 
+
+
 module.exports = router;
