@@ -8,6 +8,7 @@ const errorMiddleware = require('./middlewares/error');
 const authRoute = require('./routes/auth-route');
 const userRoute = require('./routes/user-route');
 const roomRoute = require('./routes/room-route');
+const bookRoute = require('./routes/book-route')
 
 const app = express();
 
@@ -20,7 +21,7 @@ app.use('/auth', authRoute);
 app.use('/user', userRoute);
 
 app.use('/booking/reserve', roomRoute);
-
+app.use("/book", bookRoute)
 
 
 app.use(notFoundMiddleware);
