@@ -6,12 +6,13 @@ const uploadMiddleware = require('../middlewares/upload');
 
 const router = express.Router();
 
-router.post('/roomtable', authenticatedMiddleware,
+router.post('/create', authenticatedMiddleware,
 
     uploadMiddleware.single([
         // { name: 'roomImage', maxCount: 1 }
     ]),
     room_controller.createRoom
 );
+router.get("/all-room", room_controller.getAllRoom)
 
 module.exports = router;

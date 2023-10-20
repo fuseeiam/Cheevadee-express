@@ -16,4 +16,17 @@ exports.createRoom = async (req, res, next) => {
     }
 }
 
+exports.getAllRoom = async (req, res, next) => {
+    try {
 
+        const allRoom = await prisma.room.findMany({
+            include: {
+
+            }
+        })
+
+        res.json(allRoom)
+    } catch (err) {
+        next(err)
+    }
+}
