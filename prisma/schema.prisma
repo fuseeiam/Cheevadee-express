@@ -11,43 +11,31 @@ datasource db {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   firstName String
   lastName  String
-  email     String? @unique
-  mobile    String? @unique
+  email     String?   @unique
+  mobile    String?   @unique
   password  String
-  // role      ROLE    @default(USER)
+  role      ROLE      @default(USER)
+  bookings  Booking[]
 }
 
-// enum ROLE {
-//   ADMIN
-//   USER
-// }
+enum ROLE {
+  ADMIN
+  USER
+}
 
 model Booking {
-  id             Int           @id @default(autoincrement())
-  userId         Int
-  arrival        DateTime
-  departure      DateTime
-  payment_slip   String?
-  payment_status PaymentStatus @default(PENDING)
-  room_id        Int
-}
-
-model Room {
-  id          Int     @id @default(autoincrement())
-  roomtype_id Int
-  bed         String
-  picture     String?
-  room_size   String
-  veiw        String
-  price       Int
-}
-
-model RoomType {
-  id       Int    @id @default(autoincrement())
-  roomtype String
+  id            Int           @id @default(autoincrement())
+  userId        Int
+  roomId        Int
+  arrival       DateTime
+  departure     DateTime
+  paymentSlip   String?
+  paymentStatus PaymentStatus @default(PENDING)
+  user          User          @relation(fields: [userId], references: [id])
+  room          Room          @relation(fields: [roomId], references: [id])
 }
 
 enum PaymentStatus {
@@ -56,10 +44,13 @@ enum PaymentStatus {
   PENDING
 }
 
-model Admin {
-  id        Int     @id @default(autoincrement())
-  firstName String
-  lastName  String
-  email     String? @unique
-  password  String
+model Room {
+  id       Int       @id @default(autoincrement())
+  roomtype String
+  bed      String
+  picture  String?
+  roomSize String
+  veiw     String
+  price    Int
+  Booking  Booking[]
 }
