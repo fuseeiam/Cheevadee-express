@@ -1,7 +1,6 @@
 const Joi = require('joi');
 const enumValues = ['ADMIN', 'USER'];
 
-
 const registerSchema = Joi.object({
     firstName: Joi.string().trim().required(),
 
@@ -35,8 +34,6 @@ const registerSchema = Joi.object({
 
 });
 
-
-
 exports.registerSchema = registerSchema;
 
 const loginSchema = Joi.object({
@@ -44,10 +41,11 @@ const loginSchema = Joi.object({
     password: Joi.string().required()
 });
 
+exports.loginSchema = loginSchema;
+
 // const adminLoginSchema = Joi.object({
 //     email: Joi.string().required(),
 //     password: Joi.string().required()
 // });
 
-exports.loginSchema = loginSchema;
 // exports.adminLoginSchema = adminLoginSchema;

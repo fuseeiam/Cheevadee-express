@@ -13,6 +13,7 @@ router.post('/create', authenticatedMiddleware,
     ]),
     room_controller.createRoom
 );
+
 router.get("/all-room", room_controller.getAllRoom)
 
 module.exports = router;

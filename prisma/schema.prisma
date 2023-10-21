@@ -45,12 +45,13 @@ enum PaymentStatus {
 }
 
 model Room {
-  id       Int       @id @default(autoincrement())
-  roomtype String
-  bed      String
-  picture  String?
-  roomSize String
-  veiw     String
-  price    Int
-  Booking  Booking[]
+  id            Int       @id @default(autoincrement())
+  roomtype      String
+  bed           String
+  picture       String?
+  roomSize      String
+  veiw          String
+  price         Int
+  isMaintaining Boolean
+  Booking       Booking[]
 }
