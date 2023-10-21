@@ -1,4 +1,6 @@
 const Joi = require('joi');
+const enumValues = ['ADMIN', 'USER'];
+
 
 const registerSchema = Joi.object({
     firstName: Joi.string().trim().required(),
@@ -27,9 +29,13 @@ const registerSchema = Joi.object({
     email: Joi.forbidden().when('emailOrMobile', {
         is: Joi.string().email(),
         then: Joi.string().default(Joi.ref('emailOrMobile'))
-    })
+    }),
+
+    role: Joi.string().valid(...enumValues)
 
 });
+
+
 
 exports.registerSchema = registerSchema;
 
@@ -38,10 +44,10 @@ const loginSchema = Joi.object({
     password: Joi.string().required()
 });
 
-const adminLoginSchema = Joi.object({
-    email: Joi.string().required(),
-    password: Joi.string().required()
-});
+// const adminLoginSchema = Joi.object({
+//     email: Joi.string().required(),
+//     password: Joi.string().required()
+// });
 
 exports.loginSchema = loginSchema;
-exports.adminLoginSchema = adminLoginSchema;
+// exports.adminLoginSchema = adminLoginSchema;

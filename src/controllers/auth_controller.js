@@ -10,7 +10,7 @@ exports.register = async (req, res, next) => {
         const { value, error } = registerSchema.validate(req.body);
         console.log(value);
         if (error) {
-            next(err)
+            next(error)
         }
         value.password = await bcrypt.hash(value.password, 12);
         const user = await prisma.user.create({
