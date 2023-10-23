@@ -1,6 +1,7 @@
 const Joi = require('joi');
 
-const roomSchema = Joi.object({
-
-
+const checkRoomIdSchema = Joi.object({
+    roomId: Joi.number().integer().positive().required()
 });
+
+exports.checkRoomIdSchema = checkRoomIdSchema

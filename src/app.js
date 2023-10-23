@@ -22,7 +22,7 @@ app.use('/auth', authRoute);
 app.use('/user', userRoute);
 
 app.use('/room', roomRoute);
-app.use("/book", bookRoute)
+app.use("/booking", bookRoute)
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

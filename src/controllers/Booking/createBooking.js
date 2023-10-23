@@ -1,13 +1,17 @@
 const prisma = require('../../models/prisma');
 const createError = require('../../utils/create_error');
-const reservationSchema = require('../../validators/Booking-validator');
+const { bookingSchema } = require('../../validators/Booking-validator');
 
 exports.createBooking = async (req, res, next) => {
     // 1 จองช่วง เวลา ที่เคยจองไปแล้ว ไม่ได้
     try {
-        const { bookArrival, bookDeparture, paymentSlip, paymentStatus, roomId } = reservationSchema().validate(req.body);
-        console.log("roomId  ", roomId);
-
+        console.log(req.body);
+        const { value, error } = bookingSchema.validate(req.body);
+        console.log(value);
+        if (error) {
+            next(error)
+        }
+        const { bookArrival, bookDeparture, paymentSlip, paymentStatus, roomId } = value
         const bookedBetweenDate = await prisma.booking.findFirst({
             where: {
                 roomId: +roomId,
@@ -19,6 +23,7 @@ exports.createBooking = async (req, res, next) => {
                 }
             },
         })
+        console.log("bookedBetweenDate", bookedBetweenDate);
 
         // 2 จองช่วง เวลา ระหว่าง เวลาที่เคยจองไปแล้วไม่ได้
         if (bookedBetweenDate) {
@@ -48,21 +53,22 @@ exports.createBooking = async (req, res, next) => {
             data: { userId: req.user.id, arrival: new Date(bookArrival), departure: new Date(bookDeparture), roomId: +roomId }
         })
 
-        // 5 ห้องกำลังทำความสะอาด ปรับปรุง
-        const isMaintaining = await isRoomMaintaining(value);
-        if (isMaintaining) {
-            return next(createError('Room is under maintenance.', 400));
-        }
+        // // Admin 
+        // const isRoomMaintaining = async (value) => {
+        //     const room = await prisma.room.findFirst({
+        //         where: {
+        //             id: value.roomId
+        //         }
+        //     });
+        //     return room.isMaintaining;
+        // }
 
-        // Admin 
-        const isRoomMaintaining = async (value) => {
-            const room = await prisma.room.findFirst({
-                where: {
-                    id: value.roomId
-                }
-            });
-            return room.isMaintaining;
-        }
+        // // 5 ห้องกำลังทำความสะอาด ปรับปรุง
+        // const isMaintaining = await isRoomMaintaining(value);
+        // if (isMaintaining) {
+        //     return next(createError('Room is under maintenance.', 400));
+        // }
+
 
 
         res.status(200).json(booking);

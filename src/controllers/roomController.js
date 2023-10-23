@@ -1,4 +1,5 @@
 const prisma = require("../models/prisma");
+const { checkRoomIdSchema } = require("../validators/room-validator")
 
 exports.createRoom = async (req, res, next) => {
     try {
@@ -30,3 +31,24 @@ exports.getAllRoom = async (req, res, next) => {
         next(err)
     }
 }
+
+exports.getRoomById = async (req, res, next) => {
+    try {
+        const { error } = checkRoomIdSchema.validate(req.params);
+        if (error) {
+            return next(error);
+        }
+
+        const roomId = +req.params.roomId;
+        console.log('roomId:  ', roomId);
+        const room = await prisma.room.findUnique({
+            where: {
+                id: roomId
+            }
+        });
+        res.status(200).json(room)
+    } catch (err) {
+        next(err)
+    }
+}
+

@@ -5,6 +5,6 @@ const { createBooking } = require("../controllers/Booking/createBooking")
 
 const router = express.Router();
 
-router.post('/', authenticatedMiddleware, createBooking);
+router.post('/reserve', authenticatedMiddleware, createBooking);
 
 module.exports = router;
