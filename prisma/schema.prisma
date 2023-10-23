@@ -50,8 +50,8 @@ model Room {
   bed           String
   picture       String?
   roomSize      String
-  veiw          String
+  view          String
   price         Int
   isMaintaining Boolean
-  Booking       Booking[]
+  bookings      Booking[]
 }
