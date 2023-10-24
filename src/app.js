@@ -9,7 +9,7 @@ const rateLimitMiddleware = require('./middlewares/rate-limit');
 const authRoute = require('./routes/auth-route');
 const userRoute = require('./routes/user-route');
 const roomRoute = require('./routes/room-route');
-const bookRoute = require('./routes/book-route')
+const bookRoute = require('./routes/book-route');
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use('/auth', authRoute);
 app.use('/user', userRoute);
 
 app.use('/room', roomRoute);
-app.use("/booking", bookRoute)
+app.use('/booking', bookRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
