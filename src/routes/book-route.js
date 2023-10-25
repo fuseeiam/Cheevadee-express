@@ -6,11 +6,11 @@ const uploadMiddleware = require('../middlewares/upload');
 const router = express.Router();
 const postController = require("../../src/controllers/Booking/PostSlipBooking");
 
-router.post('/reserve', authenticatedMiddleware, createBooking);
-router.post('/',
+// router.post('/reserve', authenticatedMiddleware, createBooking);
+router.post('/reserve',
     authenticatedMiddleware,
-    uploadMiddleware.single('image'),
-    postController.createPostSlip
+    uploadMiddleware.single('paymentSlip'),
+    createBooking
 )
 
 

@@ -1,17 +1,21 @@
 const prisma = require('../../models/prisma');
+const { upload } = require('../../utils/cloudinary-service');
 const createError = require('../../utils/create_error');
 const { bookingSchema } = require('../../validators/Booking-validator');
 
 exports.createBooking = async (req, res, next) => {
-    // 1 จองช่วง เวลา ที่เคยจองไปแล้ว ไม่ได้
+
+
     try {
-        console.log(req.body);
-        const { value, error } = bookingSchema.validate(req.body);
-        console.log(value);
+        console.log('wwwwwwww');
+        const data = JSON.parse(req.body.data);
+        console.log('wwwwwwww');
+        const { value, error } = bookingSchema.validate(data);
+        const { bookArrival, bookDeparture, paymentStatus, roomId } = value
         if (error) {
             next(error)
         }
-        const { bookArrival, bookDeparture, paymentSlip, paymentStatus, roomId } = value
+        // 1 จองช่วง เวลา ที่เคยจองไปแล้ว ไม่ได้
         const bookedBetweenDate = await prisma.booking.findFirst({
             where: {
                 roomId: +roomId,
@@ -41,16 +45,21 @@ exports.createBooking = async (req, res, next) => {
                 }
             },
         })
-
-        // 3 จองช่วง เวลา ระหว่าง เวลาที่เคยจองไปแล้วไม่ได้
         if (bookedOffsetDate) {
             return next(createError("Room is already booked for those dates.", 400))
         }
 
+        // Slip image
+        let paymentSlip = ""
+        if (req.file) {
+            const data = await upload(req.file.path);
+            paymentSlip = data
+        }
 
         // 4 จองสำเร็จ
         const booking = await prisma.booking.create({
-            data: { userId: req.user.id, arrival: new Date(bookArrival), departure: new Date(bookDeparture), roomId: +roomId }
+
+            data: { userId: req.user.id, arrival: new Date(bookArrival), departure: new Date(bookDeparture), roomId: +roomId, paymentSlip: paymentSlip }
         })
 
         // // Admin 

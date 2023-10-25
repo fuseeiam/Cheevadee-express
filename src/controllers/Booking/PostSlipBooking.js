@@ -3,27 +3,28 @@ const prisma = require('../../models/prisma');
 
 exports.createPostSlip = async (req, res, next) => {
     try {
+
         console.log('req', req.body);
-        // const data = { userId: req.booking.id };
-        // if (req.file) {
-        //     data.image = await upload(req.booking.path);
-        // }
+        const data = { userId: req.booking.id };
+        if (req.file) {
+            data.image = await upload(req.booking.path);
+        }
 
-        // const post = await prisma.post.create({
-        //     data: data,
-        //     include: {
-        //         user: {
-        //             select: {
-        //                 id: true,
-        //                 // firstName: true,
-        //                 // lastName: true,
-        //                 paymentSlip: true
-        //             }
-        //         }
-        //     }
-        // });
+        const post = await prisma.post.create({
+            data: data,
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        // firstName: true,
+                        // lastName: true,
+                        paymentSlip: true
+                    }
+                }
+            }
+        });
 
-        // res.status(201).json({ message: 'post created', post });
+        res.status(201).json({ message: 'post created', post });
 
     } catch (err) {
         next(err);
