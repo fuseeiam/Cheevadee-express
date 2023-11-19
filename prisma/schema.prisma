@@ -33,6 +33,7 @@ model Booking {
   arrival       DateTime
   departure     DateTime
   paymentSlip   String?
+  total_price   Int
   paymentStatus PaymentStatus @default(PENDING)
   user          User          @relation(fields: [userId], references: [id])
   room          Room          @relation(fields: [roomId], references: [id])
