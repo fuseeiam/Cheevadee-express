@@ -27,7 +27,6 @@ exports.getBookingByID = async (req, res, next) => {
 
             },
         })
-        // console.log(bookingDetails);
         res.status(200).json({ bookingDetails })
     } catch (error) {
         next(error)

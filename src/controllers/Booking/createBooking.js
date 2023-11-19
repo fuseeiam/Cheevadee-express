@@ -7,11 +7,11 @@ exports.createBooking = async (req, res, next) => {
 
 
     try {
-        console.log('wwwwwwww');
+
         const data = JSON.parse(req.body.data);
-        console.log('wwwwwwww');
+        console.log(data.total_price, "aass");
         const { value, error } = bookingSchema.validate(data);
-        const { bookArrival, bookDeparture, paymentStatus, roomId } = value
+        const { bookArrival, bookDeparture, paymentStatus, roomId, total_price } = value
         if (error) {
             next(error)
         }
@@ -59,7 +59,7 @@ exports.createBooking = async (req, res, next) => {
         // 4 จองสำเร็จ
         const booking = await prisma.booking.create({
 
-            data: { userId: req.user.id, arrival: new Date(bookArrival), departure: new Date(bookDeparture), roomId: +roomId, paymentSlip: paymentSlip }
+            data: { userId: req.user.id, arrival: new Date(bookArrival), departure: new Date(bookDeparture), roomId: +roomId, paymentSlip: paymentSlip, total_price: total_price }
         })
 
         // // Admin 

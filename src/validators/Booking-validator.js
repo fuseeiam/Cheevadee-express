@@ -6,7 +6,8 @@ const bookingSchema = Joi.object({
     ),
     bookDeparture: Joi.date().greater(Joi.ref('bookArrival')).iso(),
     roomId: Joi.number().required(),
-    paymentSlip: Joi.string()
+    paymentSlip: Joi.string(),
+    total_price: Joi.number().required()
 
 
 });
