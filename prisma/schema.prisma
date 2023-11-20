@@ -35,8 +35,15 @@ model Booking {
   paymentSlip   String?
   total_price   Int
   paymentStatus PaymentStatus @default(PENDING)
+  bookingStatus BookingStatus @default(WAITING)
   user          User          @relation(fields: [userId], references: [id])
   room          Room          @relation(fields: [roomId], references: [id])
+}
+
+enum BookingStatus {
+  COMPLETED
+  WAITING
+  CANCEL
 }
 
 enum PaymentStatus {

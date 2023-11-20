@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Booking` ADD COLUMN `bookingStatus` ENUM('COMPLETED', 'WAITING', 'CANCEL') NOT NULL DEFAULT 'WAITING';

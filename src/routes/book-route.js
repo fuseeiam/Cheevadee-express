@@ -1,7 +1,7 @@
 
 const express = require('express');
 const authenticatedMiddleware = require('../middlewares/authenticated');
-const { createBooking, getBookingById } = require("../controllers/Booking/createBooking")
+const { createBooking } = require("../controllers/Booking/createBooking")
 const uploadMiddleware = require('../middlewares/upload');
 const router = express.Router();
 const postController = require("../../src/controllers/Booking/PostSlipBooking");

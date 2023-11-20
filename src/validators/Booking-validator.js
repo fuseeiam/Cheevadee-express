@@ -1,12 +1,11 @@
 const Joi = require('joi');
 
 const bookingSchema = Joi.object({
-    bookArrival: Joi.date().min(
+    arrival: Joi.date().min(
         new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate()
     ),
-    bookDeparture: Joi.date().greater(Joi.ref('bookArrival')).iso(),
-    roomId: Joi.number().required(),
-    paymentSlip: Joi.string(),
+    departure: Joi.date().greater(Joi.ref('arrival')),
+    roomId: Joi.string().required(),
     total_price: Joi.number().required()
 
 
