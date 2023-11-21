@@ -14,5 +14,33 @@ router.patch('/', authenticatedMiddleware,
     userController.updateProfile
 );
 
+router.patch(
+    "/editprofile",
+    authenticatedMiddleware,
+    uploadMiddleware.single("profileImage"),
+    userController.updateProfile
+);
+
+router.patch(
+    "/editprofile",
+    authenticatedMiddleware,
+    uploadMiddleware.single("firstName"),
+    userController.updateProfile
+);
+
+router.patch(
+    "/editprofile",
+    authenticatedMiddleware,
+    uploadMiddleware.single("lastName"),
+    userController.updateProfile
+);
+
+router.patch(
+    "/editprofile",
+    authenticatedMiddleware,
+    uploadMiddleware.single("mobile"),
+    userController.updateProfile
+);
+
 
 module.exports = router;
