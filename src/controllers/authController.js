@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const { registerSchema, loginSchema, adminLoginSchema } = require('../validators/auth-validator');
 const prisma = require('../models/prisma');
 const createError = require('../utils/create_error');
+const fs = require("fs/promises")
+const { upload } = require("../utils/cloudinary-service")
 
 
 exports.register = async (req, res, next) => {
@@ -104,3 +106,45 @@ exports.getMe = async (req, res, next) => {
     // })
     res.status(200).json({ user: req.user });
 }
+
+exports.updateProfile = async (req, res, next) => {
+    try {
+        console.log(req.body);
+        console.log(typeof upload, "FUN");
+
+        if (req.file) {
+            const url = await upload(req.file.path);
+
+            req.body.profileImage = url;
+        }
+
+        const foundUser = await prisma.user.findFirst({
+            where: { id: req.user.id }
+        })
+
+        if (!foundUser) {
+            return createError("Not found user", 401)
+        }
+
+        const updateProfile = await prisma.user.update({
+            where: {
+                id: +req.user.id,
+            },
+            data: req.body,
+
+        });
+
+        delete updateProfile.password;
+
+        res.status(200).json({
+            message: "Success update user profile /auth/editprofile",
+            updateProfile,
+        });
+    } catch (err) {
+        next(err);
+    } finally {
+        if (req.file) {
+            fs.unlink(req.file.path);
+        }
+    }
+};

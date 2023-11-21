@@ -51,42 +51,6 @@ exports.getUserProfileById = async (req, res, next) => {
     }
 };
 
-
-exports.updateProfile = async (req, res, next) => {
-    try {
-        console.log(req.body);
-
-        if (req.file?.path) {
-            const url = await upload(req.file.path);
-
-            req.body.profileImage = url;
-        }
-
-        const updateProfile = await prisma.user.update({
-            where: {
-                id: +req.user.id,
-            },
-            data: req.body,
-            include: {
-                authUser: true,
-            },
-        });
-        updateProfile.authUser = updateProfile.authUser[0];
-        delete updateProfile.authUser.password;
-
-        res.status(200).json({
-            message: "Success update user profile /auth/editprofile",
-            updateProfile,
-        });
-    } catch (err) {
-        next(err);
-    } finally {
-        if (req.file) {
-            fs.unlink(req.file.path);
-        }
-    }
-};
-
 exports.deleteBookingbyId = async (req, res, next) => {
     try {
         const { id } = req.params;
