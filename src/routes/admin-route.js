@@ -9,4 +9,10 @@ router.get('/checkbooking', adminController.getAllBooking);
 router.patch(`/paymentStatus/:id`, adminController.confirmSlip);
 router.patch(`/rejectStatus/:id`, adminController.rejectSlip);
 
+router.get('/bookingStatus', adminController.getAllBookingStatus);
+router.patch(`/confirmbookingStatus/:id`, adminController.confirmBooking);
+router.patch(`/rejectbookingStatus/:id`, adminController.rejectBooking);
+
+router.get('/checkUser', adminController.getAllUser);
+
 module.exports = router;
