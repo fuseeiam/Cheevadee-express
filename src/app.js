@@ -10,6 +10,7 @@ const authRoute = require('./routes/auth-route');
 const userRoute = require('./routes/user-route');
 const roomRoute = require('./routes/room-route');
 const bookRoute = require('./routes/book-route');
+const adminRoute = require('./routes/admin-route');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
+app.use('/admin', adminRoute);
 
 app.use('/room', roomRoute);
 app.use('/booking', bookRoute);

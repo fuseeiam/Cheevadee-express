@@ -104,6 +104,7 @@ exports.getMe = async (req, res, next) => {
     // await prisma.create({
     //     userId,
     // })
+
     res.status(200).json({ user: req.user });
 }
 
