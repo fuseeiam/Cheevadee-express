@@ -1,9 +1,24 @@
-const fs = require('fs/promises');
+// const fs = require('fs/promises');
 
-const createError = require('../utils/create_error');
-const { upload } = require('../utils/cloudinary-service')
+// const createError = require('../utils/create_error');
+// const { upload } = require('../utils/cloudinary-service')
 const prisma = require('../models/prisma');
 
+exports.cancelbooking = async (req, res, next) => {
+    try {
+        const cancel = await prisma.booking.update({
+            where: {
+                id: +req.params.id
+            },
+            data: {
+                bookingStatus: "CANCEL"
+            }
+        })
+        res.status(201).json({ cancel })
+    } catch (err) {
+        next(err)
+    }
+}
 // exports.updateProfile = async (req, res, next) => {
 //     try {
 

@@ -21,8 +21,8 @@ exports.getAllRoom = async (req, res, next) => {
     try {
 
         const allRoom = await prisma.room.findMany({
-            include: {
-
+            where: {
+                isMaintaining: false
             }
         })
 

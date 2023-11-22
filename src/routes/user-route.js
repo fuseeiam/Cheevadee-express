@@ -6,6 +6,7 @@ const uploadMiddleware = require('../middlewares/upload');
 
 const router = express.Router();
 
+
 // router.patch('/', authenticatedMiddleware,
 //     // uploadMiddleware.single('qwerty'),
 //     uploadMiddleware.fields([
@@ -13,5 +14,5 @@ const router = express.Router();
 //     ]),
 //     userController.updateProfile
 // );
-
+router.patch(`/cancelbooking/:id`, userController.cancelbooking);
 module.exports = router;
