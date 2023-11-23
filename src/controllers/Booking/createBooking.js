@@ -19,6 +19,28 @@ exports.createBooking = async (req, res, next) => {
         const bookedBetweenDate = await prisma.booking.findFirst({
             where: {
                 roomId: +roomId,
+                AND: [{
+                    OR: [
+                        {
+                            arrival: { lte: new Date(departure) }
+                        },
+                        {
+                            AND: [
+                                { arrival: { lte: new Date(arrival) } },
+                                { departure: { gte: new Date(departure) } }
+                            ]
+                        },
+                        {
+                            departure: { lte: new Date(arrival) }
+                        },
+                        {
+                            AND: [
+                                { arrival: { gte: new Date(arrival) } },
+                                { departure: { lte: new Date(departure) } }
+                            ]
+                        },
+                    ]
+                }],
                 arrival: {
                     lte: new Date(arrival)
                 },
