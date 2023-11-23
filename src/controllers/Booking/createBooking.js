@@ -31,7 +31,7 @@ exports.createBooking = async (req, res, next) => {
                             ]
                         },
                         {
-                            departure: { lte: new Date(arrival) }
+                            departure: { gte: new Date(arrival) }
                         },
                         {
                             AND: [
@@ -41,22 +41,55 @@ exports.createBooking = async (req, res, next) => {
                         },
                     ]
                 }],
-                arrival: {
-                    lte: new Date(arrival)
-                },
-                departure: {
-                    gte: new Date(departure)
-                }
             },
         })
+        // const bookedBetweenDate = await prisma.booking.findFirst({
+        //     where: {
+        //         roomId: +roomId,
+        //         OR: [
+        // {
+        //     arrival: {
+        //         lte: new Date(arrival),
+        //         gte: new Date(departure),
+        //     },
+        // },
+        // {
+        //     departure: {
+        //         lte: new Date(arrival),
+        //         gte: new Date(departure),
+        //     },
+        // },
+        //         {
+        //             arrival: {
+        //                 lte: new Date(arrival),
+        //             },
+        //             departure: {
+        //                 gte: new Date(arrival),
+        //             },
+        //         },
+        //     ],
+        // },
+
+
+        // arrival: {
+        //     lte: new Date(arrival)
+        // },
+        // departure: {
+        //     gte: new Date(departure)
+        // }
+
+        // })
+
         console.log("bookedBetweenDate", bookedBetweenDate);
 
-        // // 2 จองช่วง เวลา ระหว่าง เวลาที่เคยจองไปแล้วไม่ได้
+        // 2 จองช่วง เวลา ระหว่าง เวลาที่เคยจองไปแล้วไม่ได้
+
         if (bookedBetweenDate) {
             return next(createError("Room is already booked for those dates.", 400))
         }
 
         // Slip image
+
         let paymentSlip = ""
         if (req.file) {
             console.log(req.file, "filEEEEEE");
@@ -65,6 +98,7 @@ exports.createBooking = async (req, res, next) => {
         }
 
         // 4 จองสำเร็จ
+
         const booking = await prisma.booking.create({
             data: {
                 userId: req.user.id,
@@ -75,7 +109,6 @@ exports.createBooking = async (req, res, next) => {
                 total_price: +total_price
             }
         })
-        console.log(booking, "AAA");
         res.status(201).json({ booking })
 
         // // Admin 
@@ -93,8 +126,6 @@ exports.createBooking = async (req, res, next) => {
         // if (isMaintaining) {
         //     return next(createError('Room is under maintenance.', 400));
         // }
-
-
 
 
     } catch (error) {
