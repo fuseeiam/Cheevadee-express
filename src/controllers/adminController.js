@@ -117,6 +117,8 @@ exports.getAllRoom = async (req, res, next) => {
 
 exports.createRoom = async (req, res, next) => {
     try {
+        console.log(req.body);
+        console.log(req.file);
         const value = req.body
         const response = {}
         if (req.file) {

@@ -17,7 +17,7 @@ router.patch(`/rejectbookingStatus/:id`, adminController.rejectBooking);
 router.get('/checkUser', adminController.getAllUser);
 
 router.get('/getallroom', adminController.getAllRoom);
-router.post('/createroom', uploadMiddleware.single('pictureRoom'), adminController.createRoom);
+router.post('/createroom', uploadMiddleware.single('picture'), adminController.createRoom);
 router.patch(`/maintaining/:id`, adminController.maintaining);
 router.patch(`/remaintaining/:id`, adminController.remaintaining);
 // router.patch('/editroom', adminController.editRoom);
