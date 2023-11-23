@@ -19,7 +19,6 @@ exports.createBooking = async (req, res, next) => {
         const bookedBetweenDate = await prisma.booking.findFirst({
             where: {
                 roomId: +roomId,
-                userId: req.user.id,
                 arrival: {
                     lte: new Date(arrival)
                 },
